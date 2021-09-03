@@ -7,7 +7,7 @@ const sSpawnName = 'MilkyWay' // The primary StructureSpawn created at the start
 // Set role: Game.creeps.Michael.memory.role = 'harvester'
 
 var roleHarvester = require('role.harvester');
-//var roleUpgrader = require('role.upgrader');
+var roleUpgrader = require('role.upgrader');
 //var roleBuilder = require('role.builder');
 
 module.exports.loop = function () {
@@ -62,14 +62,14 @@ module.exports.loop = function () {
   console.log('# harvesters: ' + nHarvesters.length);
   var nBuilders = _.filter(Game.creeps, (creep) => creep.memory.role == 'builder');
   console.log('# builders: ' + nBuilders.length);
+*/
   var nUpgraders = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader');
   console.log('# upgraders: ' + nUpgraders.length);
-*/
+
   if(nHarvesters.length < 2) {
     var newName = 'Harvester' + Game.time;
     console.log('Spawning new harvester: ' + newName);
-    Game.spawns['MilkyWay'].spawnCreep([WORK,CARRY,MOVE], newName,
-                                              {memory: {role: 'harvester'}});
+    Game.spawns['MilkyWay'].spawnCreep([WORK,CARRY,MOVE], newName, {memory: {role: 'harvester'}});
   }
 
 /*
@@ -79,14 +79,13 @@ module.exports.loop = function () {
     Game.spawns['MilkyWay'].spawnCreep([WORK,CARRY,MOVE], newName,
                                               {memory: {role: 'builder'}});
   }
-
+*/
   if(nUpgraders.length < 1) {
     var newName = 'Upgrader' + Game.time;
     console.log('Spawning new upgrader: ' + newName);
-    Game.spawns['MilkyWay'].spawnCreep([WORK,CARRY,MOVE], newName,
-                                              {memory: {role: 'upgrader'}});
+    Game.spawns['MilkyWay'].spawnCreep([WORK,CARRY,MOVE], newName, {memory: {role: 'upgrader'}});
   }
-*/
+
   if(Game.spawns['MilkyWay'].spawning) {
     var spawningCreep = Game.creeps[Game.spawns['MilkyWay'].spawning.name];
     Game.spawns['MilkyWay'].room.visual.text(
