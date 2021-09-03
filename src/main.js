@@ -79,7 +79,7 @@ module.exports.loop = function () {
   if(nUpgraders.length < 1) {
     var newName = 'Upgrader' + Game.time;
     console.log('Spawning new upgrader: ' + newName);
-    Game.spawns['MilkyWay'].spawnCreep([WORK,CARRY,MOVE], newName, {memory: {role: 'upgrader'}});
+    Game.spawns['MilkyWay'].spawnCreep([WORK,CARRY,MOVE], newName, {memory: {role: 'upgrader', upgrading: false}});
   }
 
   if(Game.spawns['MilkyWay'].spawning) {
