@@ -20,9 +20,8 @@ module.exports.loop = function () {
     if (spawn == sSpawnName) { // our own spawn point
       sSpawnPoint = Game.spawns[spawn];
     }
-    else {
+    else { // when another room is "captured"
       console.log("Found spawn point with another name: " + spawn)
-      // We'll use it anyway (for the moment?)
       sSpawnPoint = Game.spawns[spawn];
     }
 
@@ -38,10 +37,7 @@ module.exports.loop = function () {
       let sources = sSpawnPoint.room.find(FIND_SOURCES);
       for (let sourceKey in sources) {
         let source = sources[sourceKey];
-        console.log("Found source with id: " + source.id);
-        console.log("Position in " + source.pos.roomName
-                    + ": x=" + source.pos.x
-                    + " y=" + source.pos.y);
+        console.log("🟡 Position source with id: " + source.id + " in " + source.pos.roomName + ": x=" + source.pos.x + " y=" + source.pos.y);
       }
     }
   }
@@ -58,13 +54,13 @@ module.exports.loop = function () {
   // Creeps
   // Count our harvesters
   var nHarvesters = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester');
+//  console.log('# harvesters: ' + nHarvesters.length);
 /*
-  console.log('# harvesters: ' + nHarvesters.length);
   var nBuilders = _.filter(Game.creeps, (creep) => creep.memory.role == 'builder');
   console.log('# builders: ' + nBuilders.length);
 */
   var nUpgraders = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader');
-  console.log('# upgraders: ' + nUpgraders.length);
+//  console.log('# upgraders: ' + nUpgraders.length);
 
   if(nHarvesters.length < 2) {
     var newName = 'Harvester' + Game.time;
@@ -103,9 +99,10 @@ module.exports.loop = function () {
     if(creep.memory.role == 'harvester') {
       roleHarvester.run(creep);
     }
-/*    if(creep.memory.role == 'upgrader') {
+    if(creep.memory.role == 'upgrader') {
       roleUpgrader.run(creep);
     }
+/*
     if(creep.memory.role == 'builder') {
       roleBuilder.run(creep);
     }
