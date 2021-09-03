@@ -12,12 +12,15 @@ var roleHarvester = {
     /** @param {Creep} creep **/
     run: function(creep) {
         if(creep.carry.energy < creep.carryCapacity) {
+            // TODO: sources already searched in main
+            // - loop found found sources
+            // - assign (empty) creep to source with most energy
             var sources = creep.room.find(FIND_SOURCES);
             if(creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(sources[0]);
             }
         }
-        else if(Game.spawns['MilkyWay'].energy < Game.spawns['MilkyWay'].energyCapacity) {
+        else if(Game.spawns['MilkyWay'].store[RESOURCE_ENERGY] < Game.spawns['MilkyWay'].store.getCapacity(RESOURCE_ENERGY)) {
             if(creep.transfer(Game.spawns['MilkyWay'], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(Game.spawns['MilkyWay']);
             }
