@@ -27,6 +27,7 @@ module.exports.loop = function () {
 
     // Double check if a StructureSpawn object is found
     if (sSpawnPoint != undefined) {
+      // TODO: when called the first time, save sources in Room.memory
       // Check StructureSpawn Position
       /* console.log("Spawn position in " + sSpawnPoint.pos.roomName
                   + ": x=" + sSpawnPoint.pos.x
@@ -68,14 +69,12 @@ module.exports.loop = function () {
     Game.spawns['MilkyWay'].spawnCreep([WORK,CARRY,MOVE], newName, {memory: {role: 'harvester'}});
   }
 
-/*
   if(nBuilders.length < 1) {
     var newName = 'Builder' + Game.time;
     console.log('Spawning new builder: ' + newName);
-    Game.spawns['MilkyWay'].spawnCreep([WORK,CARRY,MOVE], newName,
-                                              {memory: {role: 'builder'}});
+    Game.spawns['MilkyWay'].spawnCreep([WORK,CARRY,MOVE], newName, {memory: {role: 'builder'}});
   }
-*/
+
   if(nUpgraders.length < 1) {
     var newName = 'Upgrader' + Game.time;
     console.log('Spawning new upgrader: ' + newName);
@@ -102,10 +101,8 @@ module.exports.loop = function () {
     if(creep.memory.role == 'upgrader') {
       roleUpgrader.run(creep);
     }
-/*
     if(creep.memory.role == 'builder') {
       roleBuilder.run(creep);
     }
-*/
   }
 }
