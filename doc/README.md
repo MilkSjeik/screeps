@@ -3,6 +3,16 @@
 These are personal notes, taken when going through the Screeps tutorial and [documentation](https://docs.screeps.com/).
 
 ## Tutorial
+### Steps
+Basic steps done in the tutorial, required "tasks" to play the game:
+- Spawn creep
+- Collect energy
+    1) Return energy to spawn, needed to spawn more creeps
+    2) Deliver energy to room controller
+- Upgrade room controller
+- Build extensions, to store more energy
+- Build bigger creeps
+- Construct tower
 ### Scripts
 https://github.com/screeps/tutorial-scripts
 ### Basic Scripting
@@ -235,7 +245,7 @@ module.exports.loop = function () {
 #### Maintain extensions
 Extensions also require energy
 Update `harverster.role`:
-- filter on found structures: `Game.structures object or search within the room with the help of Room.find(FIND_STRUCTURES). In both cases, you will need to filter the list of items on the condition structure.structureType == STRUCTURE_EXTENSION (or, alternatively, structure instanceof StructureExtension)`
+- filter on found structures: `Game.structures` object or search within the room with the help of `Room.find(FIND_STRUCTURES)`. In both cases, you will need to filter the list of items on the condition `structure.structureType == STRUCTURE_EXTENSION` (or, alternatively, `structure instanceof StructureExtension`)`
 
 
 ```
@@ -267,8 +277,8 @@ var roleHarvester = {
 
 module.exports = roleHarvester;
 ```
-https://docs.screeps.com/api/#Game.structures
-https://docs.screeps.com/api/#StructureExtension
+[Game.structures](https://docs.screeps.com/api/#Game.structures)
+[StructureExtension](https://docs.screeps.com/api/#StructureExtension)
 #### Output total amount of energy in the room
 `main`:
 ```
