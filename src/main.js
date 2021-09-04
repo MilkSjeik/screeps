@@ -15,7 +15,8 @@ module.exports.loop = function () {
 
   // Lookup SpawnPoint
   for (let spawn in Game.spawns) {
-    console.log("Found spawn point: " + spawn)
+    // TODO: build debugging mode flag
+    // console.log("Found spawn point: " + spawn)
     // Obsolete check?
     if (spawn == sSpawnName) { // our own spawn point
       sSpawnPoint = Game.spawns[spawn];
@@ -38,7 +39,7 @@ module.exports.loop = function () {
       let sources = sSpawnPoint.room.find(FIND_SOURCES);
       for (let sourceKey in sources) {
         let source = sources[sourceKey];
-        console.log("🟡 Position source with id: " + source.id + " in " + source.pos.roomName + ": x=" + source.pos.x + " y=" + source.pos.y);
+        //console.log("🟡 Position source with id: " + source.id + " in " + source.pos.roomName + ": x=" + source.pos.x + " y=" + source.pos.y);
       }
     }
   }
@@ -64,30 +65,50 @@ module.exports.loop = function () {
   if(nHarvesters.length < 2) {
     var newName = 'Harvester' + Game.time;
     console.log('Spawning new harvester: ' + newName);
-    Game.spawns['MilkyWay'].spawnCreep([WORK,CARRY,MOVE], newName, {memory: {role: 'harvester'}});
+    sSpawnPoint.spawnCreep([WORK,CARRY,MOVE], newName, {memory: {role: 'harvester'}});
   }
-
-  if(nBuilders.length < 1) {
-    var newName = 'Builder' + Game.time;
-    console.log('Spawning new builder: ' + newName);
-    Game.spawns['MilkyWay'].spawnCreep([WORK,CARRY,MOVE], newName, {memory: {role: 'builder'}});
-  }
-
-  if(nUpgraders.length < 1) {
+  else if(nUpgraders.length < 1) {
     var newName = 'Upgrader' + Game.time;
     console.log('Spawning new upgrader: ' + newName);
-    Game.spawns['MilkyWay'].spawnCreep([WORK,CARRY,MOVE], newName, {memory: {role: 'upgrader', upgrading: false}});
+    sSpawnPoint.spawnCreep([WORK,CARRY,MOVE], newName, {memory: {role: 'upgrader', upgrading: false}});
+  }
+  else if(nBuilders.length < 1) {
+    var newName = 'Builder' + Game.time;
+    console.log('Spawning new builder: ' + newName);
+    sSpawnPoint.spawnCreep([WORK,CARRY,MOVE], newName, {memory: {role: 'builder'}});
   }
 
-  if(Game.spawns['MilkyWay'].spawning) {
+  // Display message when spawning a creep
+  if(sSpawnPoint.spawning) {
     var spawningCreep = Game.creeps[Game.spawns['MilkyWay'].spawning.name];
-    Game.spawns['MilkyWay'].room.visual.text(
+    sSpawnPoint.room.visual.text(
         '🛠️' + spawningCreep.memory.role,
         Game.spawns['MilkyWay'].pos.x + 1,
         Game.spawns['MilkyWay'].pos.y,
         {align: 'left', opacity: 0.8});
-}
+  }
 
+  // We can only build extensions starting at controller level 2
+  if (sSpawnPoint.room.controller.level > 1) {
+    // Check if there are already extenions build
+    const extensions = sSpawnPoint.room.find(FIND_MY_STRUCTURES, { filter: { structureType: STRUCTURE_EXTENSION }});
+    console.log('Spawn has ' + extensions.length + ' extensions available');
+    // TODO: fix this, until extensions are fully build, this check is 0
+    // => Store in room memory
+    if (extensions.length == 0) {
+      // Build extensions around our spawn when a builder creep is available
+      /* 4 extensions around spawn:
+         - top    = y - 2
+         - bottom = y + 2
+         - left   = x - 2
+         - right  = y + 2
+      */
+    }
+  // Spawn location:
+  // sSpawnPoint.pos.x
+  // sSpawnPoint.pos.y
+  //sSpawnPoint.room.createConstructionSite()
+  }
 
 
   for(var name in Game.creeps) {
