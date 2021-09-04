@@ -8,7 +8,7 @@ const sSpawnName = 'MilkyWay' // The primary StructureSpawn created at the start
 
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
-//var roleBuilder = require('role.builder');
+var roleBuilder = require('role.builder');
 
 module.exports.loop = function () {
   let sSpawnPoint = undefined;
