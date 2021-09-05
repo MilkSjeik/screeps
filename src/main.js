@@ -6,9 +6,10 @@ const sSpawnName = 'MilkyWay' // The primary StructureSpawn created at the start
 // Returns a name? -> Michael
 // Set role: Game.creeps.Michael.memory.role = 'harvester'
 
-var roleHarvester = require('role.harvester');
-var roleUpgrader = require('role.upgrader');
-var roleBuilder = require('role.builder');
+const roleHarvester = require('role.harvester');
+const roleUpgrader = require('role.upgrader');
+const roleBuilder = require('role.builder');
+const structManager = require('manager.structures');
 
 module.exports.loop = function () {
   let sSpawnPoint = undefined;
@@ -62,6 +63,7 @@ module.exports.loop = function () {
   var nUpgraders = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader');
 //  console.log('# upgraders: ' + nUpgraders.length);
 
+  // TODO: only try to spawn when there is enough energy
   if(nHarvesters.length < 2) {
     var newName = 'Harvester' + Game.time;
     console.log('Spawning new harvester: ' + newName);
@@ -88,27 +90,8 @@ module.exports.loop = function () {
         {align: 'left', opacity: 0.8});
   }
 
-  // We can only build extensions starting at controller level 2
-  if (sSpawnPoint.room.controller.level > 1) {
-    // Check if there are already extenions build
-    const extensions = sSpawnPoint.room.find(FIND_MY_STRUCTURES, { filter: { structureType: STRUCTURE_EXTENSION }});
-    console.log('Spawn has ' + extensions.length + ' extensions available');
-    // TODO: fix this, until extensions are fully build, this check is 0
-    // => Store in room memory
-    if (extensions.length == 0) {
-      // Build extensions around our spawn when a builder creep is available
-      /* 4 extensions around spawn:
-         - top    = y - 2
-         - bottom = y + 2
-         - left   = x - 2
-         - right  = y + 2
-      */
-    }
-  // Spawn location:
-  // sSpawnPoint.pos.x
-  // sSpawnPoint.pos.y
-  //sSpawnPoint.room.createConstructionSite()
-  }
+  // Verify if we can build extensions around the given spawn
+  structManager.buildExtensions(sSpawnPoint);
 
 
   for(var name in Game.creeps) {
