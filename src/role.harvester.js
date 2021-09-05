@@ -31,9 +31,11 @@ var roleHarvester = {
         let testtargets = creep.room.find(FIND_MY_STRUCTURES, { filter: { structureType: STRUCTURE_EXTENSION }});
         console.log('Found ' + testtargets.length + ' testtargets: ' + testtargets);
 
+        // TODO: following works:
         let extensions = creep.room.find(FIND_MY_STRUCTURES, { filter: { structureType: STRUCTURE_EXTENSION }});
+        //console.log('Extensions: ' + extensions);
         for (let extension in extensions) {
-          console.log('extension free capacity: ' + extension.getFreeCapacity);
+          console.log('extension ' + extensions[extension].id + ' free capacity: ' + extensions[extension].store.getFreeCapacity(RESOURCE_ENERGY));
         }
 
         if(targets.length > 0) {
