@@ -69,7 +69,7 @@ module.exports.loop = function () {
     console.log('Spawning new harvester: ' + newName);
     sSpawnPoint.spawnCreep([WORK,CARRY,MOVE], newName, {memory: {role: 'harvester'}});
   }
-  else if(nUpgraders.length < 1) {
+  else if(nUpgraders.length < 3) {
     var newName = 'Upgrader' + Game.time;
     console.log('Spawning new upgrader: ' + newName);
     sSpawnPoint.spawnCreep([WORK,CARRY,MOVE], newName, {memory: {role: 'upgrader', upgrading: false}});
