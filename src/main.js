@@ -6,16 +6,18 @@ const sSpawnName = 'MilkyWay' // The primary StructureSpawn created at the start
 // Returns a name? -> Michael
 // Set role: Game.creeps.Michael.memory.role = 'harvester'
 
-var roleHarvester = require('role.harvester');
-var roleUpgrader = require('role.upgrader');
-//var roleBuilder = require('role.builder');
+const roleHarvester = require('role.harvester');
+const roleUpgrader = require('role.upgrader');
+const roleBuilder = require('role.builder');
+const structManager = require('manager.structures');
 
 module.exports.loop = function () {
   let sSpawnPoint = undefined;
 
   // Lookup SpawnPoint
   for (let spawn in Game.spawns) {
-    console.log("Found spawn point: " + spawn)
+    // TODO: build debugging mode flag
+    // console.log("Found spawn point: " + spawn)
     // Obsolete check?
     if (spawn == sSpawnName) { // our own spawn point
       sSpawnPoint = Game.spawns[spawn];
@@ -27,6 +29,7 @@ module.exports.loop = function () {
 
     // Double check if a StructureSpawn object is found
     if (sSpawnPoint != undefined) {
+      // TODO: when called the first time, save sources in Room.memory
       // Check StructureSpawn Position
       /* console.log("Spawn position in " + sSpawnPoint.pos.roomName
                   + ": x=" + sSpawnPoint.pos.x
@@ -37,7 +40,7 @@ module.exports.loop = function () {
       let sources = sSpawnPoint.room.find(FIND_SOURCES);
       for (let sourceKey in sources) {
         let source = sources[sourceKey];
-        console.log("🟡 Position source with id: " + source.id + " in " + source.pos.roomName + ": x=" + source.pos.x + " y=" + source.pos.y);
+        //console.log("🟡 Position source with id: " + source.id + " in " + source.pos.roomName + ": x=" + source.pos.x + " y=" + source.pos.y);
       }
     }
   }
@@ -55,42 +58,40 @@ module.exports.loop = function () {
   // Count our harvesters
   var nHarvesters = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester');
 //  console.log('# harvesters: ' + nHarvesters.length);
-/*
   var nBuilders = _.filter(Game.creeps, (creep) => creep.memory.role == 'builder');
-  console.log('# builders: ' + nBuilders.length);
-*/
+//  console.log('# builders: ' + nBuilders.length);
   var nUpgraders = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader');
 //  console.log('# upgraders: ' + nUpgraders.length);
 
+  // TODO: only try to spawn when there is enough energy
   if(nHarvesters.length < 2) {
     var newName = 'Harvester' + Game.time;
     console.log('Spawning new harvester: ' + newName);
-    Game.spawns['MilkyWay'].spawnCreep([WORK,CARRY,MOVE], newName, {memory: {role: 'harvester'}});
+    sSpawnPoint.spawnCreep([WORK,CARRY,MOVE], newName, {memory: {role: 'harvester'}});
   }
-
-/*
-  if(nBuilders.length < 1) {
-    var newName = 'Builder' + Game.time;
-    console.log('Spawning new builder: ' + newName);
-    Game.spawns['MilkyWay'].spawnCreep([WORK,CARRY,MOVE], newName,
-                                              {memory: {role: 'builder'}});
-  }
-*/
-  if(nUpgraders.length < 1) {
+  else if(nUpgraders.length < 1) {
     var newName = 'Upgrader' + Game.time;
     console.log('Spawning new upgrader: ' + newName);
-    Game.spawns['MilkyWay'].spawnCreep([WORK,CARRY,MOVE], newName, {memory: {role: 'upgrader', upgrading: false}});
+    sSpawnPoint.spawnCreep([WORK,CARRY,MOVE], newName, {memory: {role: 'upgrader', upgrading: false}});
+  }
+  else if(nBuilders.length < 1) {
+    var newName = 'Builder' + Game.time;
+    console.log('Spawning new builder: ' + newName);
+    sSpawnPoint.spawnCreep([WORK,CARRY,MOVE], newName, {memory: {role: 'builder'}});
   }
 
-  if(Game.spawns['MilkyWay'].spawning) {
+  // Display message when spawning a creep
+  if(sSpawnPoint.spawning) {
     var spawningCreep = Game.creeps[Game.spawns['MilkyWay'].spawning.name];
-    Game.spawns['MilkyWay'].room.visual.text(
+    sSpawnPoint.room.visual.text(
         '🛠️' + spawningCreep.memory.role,
         Game.spawns['MilkyWay'].pos.x + 1,
         Game.spawns['MilkyWay'].pos.y,
         {align: 'left', opacity: 0.8});
-}
+  }
 
+  // Verify if we can build extensions around the given spawn
+  structManager.buildExtensions(sSpawnPoint);
 
 
   for(var name in Game.creeps) {
@@ -102,10 +103,8 @@ module.exports.loop = function () {
     if(creep.memory.role == 'upgrader') {
       roleUpgrader.run(creep);
     }
-/*
     if(creep.memory.role == 'builder') {
       roleBuilder.run(creep);
     }
-*/
   }
 }

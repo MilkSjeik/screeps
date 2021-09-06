@@ -20,10 +20,25 @@ var roleHarvester = {
                 creep.moveTo(sources[0]);
             }
         }
-        else if(Game.spawns['MilkyWay'].store[RESOURCE_ENERGY] < Game.spawns['MilkyWay'].store.getCapacity(RESOURCE_ENERGY)) {
-            if(creep.transfer(Game.spawns['MilkyWay'], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(Game.spawns['MilkyWay']);
+        else {
+          // Room.find(type, [opts]) -> more info, see Room api
+          //    - type = One of the FIND_* constants.
+          //    - opts = filter object, function, string
+          //             The result list will be filtered using the Lodash.filter method.
+          //           In this case:
+          //             - filter: callback funtion
+          //             - callback function as ES6 arrow function: (structure) => { return (structure.structureType == STRUCTURE_EXTENSION || structure.structureType == STRUCTURE_SPAWN) && structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0; }
+          //             - what is after 'return' is the "if" condition or structure has to apply to
+          let targets = creep.room.find(FIND_MY_STRUCTURES, { filter: (structure) => { return (structure.structureType == STRUCTURE_EXTENSION || structure.structureType == STRUCTURE_SPAWN) && structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0; } });
+          //console.log(targets);
+          for (let target in targets) {
+            console.log(targets[target].structureType + targets[target].id + ' free capacity: ' + targets[target].store.getFreeCapacity(RESOURCE_ENERGY));
+          }
+          if(targets.length > 0) {
+            if(creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+              creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff'}});
             }
+          }
         }
     }
 };
