@@ -4,7 +4,7 @@ These are personal notes, taken when going through the Screeps tutorial and [doc
 
 ## Tutorial
 ### Scripts
-https://github.com/screeps/tutorial-scripts
+[Tutorial scripts on github](https://github.com/screeps/tutorial-scripts)
 ### Basic Scripting
 #### Spawn Creep
 ```
@@ -21,7 +21,7 @@ module.exports.loop = function () {
     }
 }
 ```
-https://docs.screeps.com/api/#Room.find
+[Room.find](https://docs.screeps.com/api/#Room.find)
 #### Return energy to spawn
 ```
 module.exports.loop = function () {
@@ -40,8 +40,8 @@ module.exports.loop = function () {
     }
 }
 ```
-https://docs.screeps.com/api/#Creep.transfer
-https://docs.screeps.com/api/#Creep.store
+[Creep.transfer](https://docs.screeps.com/api/#Creep.transfer)
+[Creep.store](https://docs.screeps.com/api/#Creep.store)
 #### Second creep
 ```
 Game.spawns['Spawn1'].spawnCreep( [WORK, CARRY, MOVE], 'Harvester2' );
@@ -139,6 +139,7 @@ module.exports = roleUpgrader;
 https://docs.screeps.com/api/#RoomObject.room
 https://docs.screeps.com/api/#Room.controller
 https://docs.screeps.com/api/#Creep.upgradeController
+
 Update main module with divided roles:
 ```
 var roleHarvester = require('role.harvester');
@@ -550,3 +551,5 @@ http://docs.screeps.com/api/#StructureTower.repair
 https://docs.screeps.com/api/
 ### Game
 https://docs.screeps.com/api/#Game
+### Memory
+https://docs.screeps.com/global-objects.html#Memory-object
