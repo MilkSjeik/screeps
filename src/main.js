@@ -54,6 +54,7 @@ module.exports.loop = function () {
     }
   }
 
+  // TODO: move this to sperate file + increase number of body parts (when possible)
   // Creeps
   // Count our harvesters
   var nHarvesters = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester');
