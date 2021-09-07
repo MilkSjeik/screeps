@@ -14,6 +14,14 @@ const structManager = require('manager.structures');
 module.exports.loop = function () {
   let sSpawnPoint = undefined;
 
+  // cleanup memory deleted screeps
+  for(var name in Memory.creeps) {
+	  if(!Game.creeps[name]) {
+		  delete Memory.creeps[name];
+			console.log('Clearing non-existing creep memory:', name);
+    }
+	}
+
   // Lookup SpawnPoint
   for (let spawn in Game.spawns) {
     // TODO: build debugging mode flag
