@@ -7,9 +7,9 @@ var structManager = {
       if (room.controller.level > 1) {
         // Check if there are already extenions build
         const extensions = room.find(FIND_MY_STRUCTURES, { filter: { structureType: STRUCTURE_EXTENSION }});
-        console.log('Spawn has ' + extensions.length + ' extensions available');
+        // console.log('Spawn has ' + extensions.length + ' extensions available');
         const constructionSites = room.find(FIND_MY_CONSTRUCTION_SITES);
-        console.log('Room has ' + constructionSites.length + ' construction sites');
+        // console.log('Room has ' + constructionSites.length + ' construction sites');
         // TODO: fix this, until extensions are fully build, this check is 0
         // => Store in room memory
         if (extensions.length == 0 && constructionSites.length < 5) {

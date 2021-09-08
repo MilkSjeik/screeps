@@ -9,11 +9,11 @@ var roleUpgrader = {
             }
         }
         else {
-            console.log(creep.name + ": energy full");
+            // console.log(creep.name + ": energy full");
             // Keep upgrader at controller until all energy is transferred
             creep.memory.upgrading = true;
             if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
-                console.log(creep.name + ": moving to room controller");
+                // console.log(creep.name + ": moving to room controller");
                 creep.moveTo(creep.room.controller);
             }
             if(creep.carry.energy == 0) {
