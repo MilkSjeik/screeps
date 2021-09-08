@@ -10,6 +10,7 @@ const roleHarvester = require('role.harvester');
 const roleUpgrader = require('role.upgrader');
 const roleBuilder = require('role.builder');
 const structManager = require('manager.structures');
+const defenseManager = require('manager.defense');
 
 module.exports.loop = function () {
   let sSpawnPoint = undefined;
@@ -83,7 +84,7 @@ module.exports.loop = function () {
     console.log('Spawning new upgrader: ' + newName);
     sSpawnPoint.spawnCreep([WORK,CARRY,MOVE], newName, {memory: {role: 'upgrader', upgrading: false}});
   }
-  else if(nBuilders.length < 1) {
+  else if(nBuilders.length < 2) {
     var newName = 'Builder' + Game.time;
     console.log('Spawning new builder: ' + newName);
     sSpawnPoint.spawnCreep([WORK,CARRY,MOVE], newName, {memory: {role: 'builder'}});
@@ -116,4 +117,6 @@ module.exports.loop = function () {
       roleBuilder.run(creep);
     }
   }
+
+  defenseManager.defendRoom(sSpawnPoint.room);
 }
