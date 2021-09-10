@@ -44,6 +44,7 @@ var roleBuilder = {
             creep.moveTo(targets[0]);
           } else {
             creep.say('🛠️ repair');
+            creep.memory.repairing = true;
           }
         }
       }
