@@ -74,7 +74,7 @@ module.exports.loop = function () {
 //  console.log('# upgraders: ' + nUpgraders.length);
 
   // TODO: only try to spawn when there is enough energy
-  if(nHarvesters.length < 2) {
+  if(nHarvesters.length < 4) {
     var newName = 'Harvester' + Game.time;
     console.log('Spawning new harvester: ' + newName);
     sSpawnPoint.spawnCreep([WORK,CARRY,MOVE], newName, {memory: {role: 'harvester'}});
