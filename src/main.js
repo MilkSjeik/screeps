@@ -11,17 +11,12 @@ const roleUpgrader = require('role.upgrader');
 const roleBuilder = require('role.builder');
 const structManager = require('manager.structures');
 const defenseManager = require('manager.defense');
+const memoryManager = require('manager.memory');
 
 module.exports.loop = function () {
   let sSpawnPoint = undefined;
 
-  // cleanup memory deleted screeps
-  for (var name in Memory.creeps) {
-    if (!Game.creeps[name]) {
-      delete Memory.creeps[name];
-      console.log('Clearing non-existing creep memory:', name);
-    }
-  }
+  memoryManager.run();
 
   // Lookup SpawnPoint
   for (let spawn in Game.spawns) {
