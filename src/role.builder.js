@@ -14,10 +14,11 @@ var roleBuilder = {
           - Extensions
           - Road
     */
-    // 🛠️
+    // ️
 
-    if (creep.memory.building && creep.carry.energy == 0) {
+    if (creep.memory.building && creep.memory.repairing && creep.carry.energy == 0) {
       creep.memory.building = false;
+      creep.memory.repairing = false;
       creep.say('🔄 harvest');
     }
     if (!creep.memory.building && creep.carry.energy == creep.carryCapacity) {
@@ -30,6 +31,20 @@ var roleBuilder = {
       if (target) {
         if (creep.build(target) == ERR_NOT_IN_RANGE) {
           creep.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
+        }
+      } else {
+        const targets = creep.room.find(FIND_STRUCTURES, {
+          filter: struct => struct.hits < struct.hitsMax
+        });
+
+        targets.sort((a, b) => a.hits - b.hits);
+
+        if (targets.length > 0) {
+          if (creep.repair(targets[0]) == ERR_NOT_IN_RANGE) {
+            creep.moveTo(targets[0]);
+          } else {
+            creep.say('🛠️ repair');
+          }
         }
       }
     } else {
