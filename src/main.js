@@ -32,19 +32,11 @@ module.exports.loop = function () {
 
     // Double check if a StructureSpawn object is found
     if (sSpawnPoint != undefined) {
-      // TODO: when called the first time, save sources in Room.memory
       // Check StructureSpawn Position
       /* console.log("Spawn position in " + sSpawnPoint.pos.roomName
                   + ": x=" + sSpawnPoint.pos.x
                   + " y=" + sSpawnPoint.pos.y)
       */
-      // Lookup energy sources in the room where the StructureSpawn is located
-      // Lookup energy sources
-      let sources = sSpawnPoint.room.find(FIND_SOURCES);
-      for (let sourceKey in sources) {
-        let source = sources[sourceKey];
-      // console.log("🟡 Position source with id: " + source.id + " in " + source.pos.roomName + ": x=" + source.pos.x + " y=" + source.pos.y)
-      }
     }
   }
 
