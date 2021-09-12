@@ -12,11 +12,15 @@ const roleBuilder = require('role.builder');
 const structManager = require('manager.structures');
 const defenseManager = require('manager.defense');
 const memoryManager = require('manager.memory');
+const Logger = require('logger');
 
 module.exports.loop = function () {
   let sSpawnPoint = undefined;
+  const log = new Logger(3); // 3 = warning
 
   memoryManager.run();
+  log.msg(1, 'Hello World in debug mode'); // 1 = debug
+  log.msg(4, 'Hello World in error mode'); // 4 = error
 
   // Lookup SpawnPoint
   for (let spawn in Game.spawns) {
