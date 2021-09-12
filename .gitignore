@@ -1,1 +1,4 @@
 .screeps.json
+Gruntfile.js
+node_modules
+package-lock.json
