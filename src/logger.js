@@ -7,10 +7,10 @@ const WARNING  = 3;
 const ERROR    = 4;
 
 module.exports = class Logger {
-  logLevel = 1;
+//  logLevel = 1;
 
   constructor(logLevel) {
-    this.setLogLevel = logLevel;
+    this.logLevel = logLevel;
   }
 
 /* no getter/setter needed, since logLevel is not private
@@ -19,7 +19,7 @@ module.exports = class Logger {
   }
 */
   msg(type, message) {
-    if (type >= logLevel) {
+    if (type >= this.logLevel) {
       if (type === 4) {
         console.log('[E] ' + message);
       }
