@@ -8,6 +8,26 @@ function cleanup () {
   }
 }
 
+
+function initBrain() {
+  // Set default number of creeps per role
+  _.forEach(Game.rooms, (room) => {
+    // Verify if the room is already stored in memory
+    if (!room.memory.creeps) {
+      // If not, define default number of creep per role
+      room.memory.creeps = [{ "role" : "miner", "number": 1},
+                            { "role" : "transporter", "number": 1},
+                            { "role" : "builder", "number": 3},
+                            { "role" : "harvester", "number": 3},
+                            { "role" : "upgrader", "number": 3}];
+    }
+  });
+}
+
+// TODO: retrieve number of wanted creeps with lodash filter function:
+//         var harvesters = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester' && creep.room.name == room.name);
+
+
 function findSources () {
   // Find sources per room')
   _.forEach(Game.rooms, (room) => {
@@ -30,6 +50,7 @@ function findSources () {
 module.exports = {
   run: function () {
     cleanup();
+    initBrain();
     findSources();
   }
 };
