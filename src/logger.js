@@ -1,14 +1,9 @@
 // TODO:
 // - add jsdoc
 // - add constants
-const DEBUG    = 1;
-const INFO     = 2;
-const WARNING  = 3;
-const ERROR    = 4;
+const C = require('./logger.constants');
 
 module.exports = class Logger {
-//  logLevel = 1;
-
   constructor(logLevel) {
     this.logLevel = logLevel;
   }
@@ -20,16 +15,16 @@ module.exports = class Logger {
 */
   msg(type, message) {
     if (type >= this.logLevel) {
-      if (type === 4) {
+      if (type === C.ERROR) {
         console.log('[E] ' + message);
       }
-      else if (type === 3) {
+      else if (type === C.WARNING) {
         console.log('[W] ' + message);
       }
-      else if (type === 2) {
+      else if (type === C.INFO) {
         console.log('[I] ' + message);
       }
-      else if (type === 1) {
+      else if (type === C.DEBUG) {
         console.log('[D] ' + message);
       }
     }

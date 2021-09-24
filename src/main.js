@@ -13,14 +13,13 @@ const structManager = require('manager.structures');
 const defenseManager = require('manager.defense');
 const memoryManager = require('manager.memory');
 const Logger = require('logger');
+const L = require('./logger.constants');
 
 module.exports.loop = function () {
   let sSpawnPoint = undefined;
-  const log = new Logger(3); // 3 = warning
+  const log = new Logger(L.WARNING);
 
   memoryManager.run();
-  log.msg(1, 'Hello World in debug mode'); // 1 = debug
-  log.msg(4, 'Hello World in error mode'); // 4 = error
 
   // Lookup SpawnPoint
   for (let spawn in Game.spawns) {
@@ -30,7 +29,7 @@ module.exports.loop = function () {
     if (spawn == sSpawnName) { // our own spawn point
       sSpawnPoint = Game.spawns[spawn];
     }else { // when another room is "captured"
-      console.log('Found spawn point with another name: ' + spawn);
+      log.msg(L.DEBUG, 'Found spawn point with another name: ' + spawn);
       sSpawnPoint = Game.spawns[spawn];
     }
 
@@ -48,7 +47,7 @@ module.exports.loop = function () {
   for (var name in Memory.creeps) {
     if (!Game.creeps[name]) {
       delete Memory.creeps[name];
-      console.log('Clearing non-existing creep memory:', name);
+      log.msg(L.DEBUG, 'Clearing non-existing creep memory:', name);
     }
   }
 
@@ -65,17 +64,17 @@ module.exports.loop = function () {
   // TODO: only try to spawn when there is enough energy
   if (nHarvesters.length < 4) {
     var newName = 'Harvester' + Game.time;
-    console.log('Spawning new harvester: ' + newName);
+    log.msg(L.INFO, 'Spawning new harvester: ' + newName);
     sSpawnPoint.spawnCreep([WORK, CARRY, MOVE], newName, {memory: {role: 'harvester'}});
   }
   else if (nUpgraders.length < 3) {
     var newName = 'Upgrader' + Game.time;
-    console.log('Spawning new upgrader: ' + newName);
+    log.msg(L.INFO, 'Spawning new upgrader: ' + newName);
     sSpawnPoint.spawnCreep([WORK, CARRY, MOVE], newName, {memory: {role: 'upgrader', upgrading: false}});
   }
   else if (nBuilders.length < 2) {
     var newName = 'Builder' + Game.time;
-    console.log('Spawning new builder: ' + newName);
+    log.msg(L.INFO, 'Spawning new builder: ' + newName);
     sSpawnPoint.spawnCreep([WORK, CARRY, MOVE], newName, {memory: {role: 'builder'}});
   }
 

@@ -6,11 +6,15 @@
  * var mod = require('role.harvester')
  * mod.thing == 'a thing' // true
  */
+const Logger = require('logger');
+const L = require('./logger.constants');
 
-var roleHarvester = {
+const roleHarvester = {
 
   /** @param {Creep} creep **/
   run: function (creep) {
+    const log = new Logger(L.INFO);
+
     if (creep.carry.energy < creep.carryCapacity) {
       // TODO: sources already searched in main
       // - loop found found sources
@@ -32,7 +36,7 @@ var roleHarvester = {
         return (structure.structureType == STRUCTURE_EXTENSION || structure.structureType == STRUCTURE_SPAWN) && structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;}});
       // console.log(targets)
       for (let target in targets) {
-        console.log(targets[target].structureType + targets[target].id + ' free capacity: ' + targets[target].store.getFreeCapacity(RESOURCE_ENERGY));
+        log.msg(L.DEBUG, targets[target].structureType + targets[target].id + ' free capacity: ' + targets[target].store.getFreeCapacity(RESOURCE_ENERGY));
       }
       if (targets.length > 0) {
         if (creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
