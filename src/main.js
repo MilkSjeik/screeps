@@ -12,6 +12,7 @@ const roleBuilder = require('role.builder');
 const structManager = require('manager.structures');
 const defenseManager = require('manager.defense');
 const memoryManager = require('manager.memory');
+const screepsManager = require('manager.screeps');
 const Logger = require('logger');
 const L = require('./logger.constants');
 
@@ -21,6 +22,11 @@ module.exports.loop = function () {
 
   memoryManager.run();
 
+
+  _.forEach(Game.rooms, (room) => {
+    screepsManager.run(room);
+  });
+  
   // Lookup SpawnPoint
   for (let spawn in Game.spawns) {
     // TODO: build debugging mode flag
@@ -43,13 +49,6 @@ module.exports.loop = function () {
     }
   }
 
-  // Cleanup Memory
-  for (var name in Memory.creeps) {
-    if (!Game.creeps[name]) {
-      delete Memory.creeps[name];
-      log.msg(L.DEBUG, 'Clearing non-existing creep memory:', name);
-    }
-  }
 
   // TODO: move this to sperate file + increase number of body parts (when possible)
   // Creeps
