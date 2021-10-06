@@ -1,5 +1,9 @@
 const Logger = require('./logger');
 const L = require('./logger.constants');
+const roleHarvester = require('role.harvester');
+const roleUpgrader = require('role.upgrader');
+const roleBuilder = require('role.builder');
+const roleMiner = require('role.miner');
 
 const log = new Logger(L.DEBUG);
 
@@ -29,6 +33,25 @@ function getBody (oRoom, sRole) {
   //sSpawnPoint.spawnCreep(getBody(oRoom, sRole), newName, {memory: {role: sRole}});
 
   return body;
+}
+
+function runCreeps () {
+  for (var name in Game.creeps) {
+    var creep = Game.creeps[name];
+    // console.log(creep.name + ": role = " + creep.memory.role)
+    if (creep.memory.role == 'harvester') {
+      roleHarvester.run(creep);
+    }
+    else if (creep.memory.role == 'upgrader') {
+      roleUpgrader.run(creep);
+    }
+    else if (creep.memory.role == 'builder') {
+      roleBuilder.run(creep);
+    }
+    else if (creep.memory.role == 'miner') {
+      roleMiner.run(creep);
+    }
+  }
 }
 
 /** @param {Room} oRoom **/
@@ -70,5 +93,6 @@ module.exports = {
   /** @param {Room} oRoom **/
   run: function (oRoom) {
     verifyCreeps(oRoom);
+    runCreeps();
   }
 };
