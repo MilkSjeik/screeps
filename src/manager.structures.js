@@ -1,4 +1,8 @@
-var structManager = {
+const Logger = require('./logger');
+const L = require('./logger.constants');
+const log = new Logger(L.DEBUG);
+
+const structManager = {
 
   /** @param {StructureSpawn} sSpawnPoint **/
   buildExtensions: function (sSpawnPoint) {
@@ -30,7 +34,22 @@ var structManager = {
             }
     */
     }
-  }
+  },
+
+  /** @param {Room} oRoom **/
+  buildContainers: function (oRoom) {
+    //oRoom.memory.sources.length
+    // (Game.rooms['E41N16']).memory.sources[1] = id
+    //Game.getObjectById(creep.memory.sourceId);
+    const sourcePosition = Game.getObjectById((Game.rooms['E41N16']).memory.sources[1]).pos;
+    this.searchFreeSpace(sourcePosition);
+  },
+
+  /** @param {Room} oRoom **/
+  searchFreeSpace: function (oPos) {
+    //oRoom.memory.sources.length
+    log.msg(L.DEBUG, 'Looking for free space around ' + oPos);
+  },
 };
 
 module.exports = structManager;
