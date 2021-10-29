@@ -26,7 +26,7 @@ module.exports.loop = function () {
   _.forEach(Game.rooms, (room) => {
     screepsManager.run(room);
   });
-  
+
   // Lookup SpawnPoint
   for (let spawn in Game.spawns) {
     // TODO: build debugging mode flag
@@ -77,6 +77,7 @@ module.exports.loop = function () {
     sSpawnPoint.spawnCreep([WORK, CARRY, MOVE], newName, {memory: {role: 'builder'}});
   }
 
+/* TODO: cleanup, now in manager.screeps.js
   // Display message when spawning a creep
   if (sSpawnPoint.spawning) {
     var spawningCreep = Game.creeps[Game.spawns['MilkyWay'].spawning.name];
@@ -86,10 +87,14 @@ module.exports.loop = function () {
       Game.spawns['MilkyWay'].pos.y,
       {align: 'left', opacity: 0.8});
   }
-
+*/
   // Verify if we can build extensions around the given spawn
   structManager.buildExtensions(sSpawnPoint);
 
+  // TODO: pass room?
+  structManager.buildContainers(sSpawnPoint.room);
+
+/* TODO: cleanup, now in manager.screeps.js
   for (var name in Game.creeps) {
     var creep = Game.creeps[name];
     // console.log(creep.name + ": role = " + creep.memory.role)
@@ -103,6 +108,6 @@ module.exports.loop = function () {
       roleBuilder.run(creep);
     }
   }
-
+*/
   defenseManager.defendRoom(sSpawnPoint.room);
 };
