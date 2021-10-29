@@ -8,7 +8,7 @@ module.exports = class Logger {
     this.logLevel = logLevel;
   }
 
-/* no getter/setter needed, since logLevel is not private
+  /* no getter/setter needed, since logLevel is not private
   setLogLevel(logLevel) {
     this.logLevel = logLevel;
   }
@@ -29,4 +29,4 @@ module.exports = class Logger {
       }
     }
   }
-}
+};
