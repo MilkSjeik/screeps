@@ -1,5 +1,5 @@
-const Logger = require('./logger');
-const L = require('./logger.constants');
+const Logger = require("./logger");
+const L = require("./logger.constants");
 
 const roleMiner = {
   /** @param {Creep} creep **/
@@ -7,28 +7,25 @@ const roleMiner = {
     const log = new Logger(L.DEBUG);
 
     if (!creep.memory.source) {
-      let foundSource = false;
+      //let foundSource = false;
       // TODO: find energy source with container nearby
       // Sources already stored in memory:
       // room.memory.sources
       let sources = creep.room.memory.sources;
-      for(const i in Game.creeps) {
-        // loop all creeps and pull each source found
-      }
+      //for (const i in Game.creeps) {
+      //  // loop all creeps and pull each source found
+      //}
 
-
-      for (source in sources) {
+      for (let source in sources) {
         // check if another creep already uses this source
         let iSourceId = sources[source];
-        log.msg(L.DEBUG, 'Verifing sourceid: ' + iSourceId);
-        for(const i in Game.creeps) {
-
-        }
+        log.msg(L.DEBUG, "Verifing sourceid: " + iSourceId);
+        //for (const i in Game.creeps) {
+        //}
       }
     }
 
-
-/*
+    /*
   room.memory.sources = table of sourceids
 
   => miner spawned -> link to source id
@@ -48,8 +45,7 @@ const roleMiner = {
 
 
 */
-
   }
-}
+};
 
 module.exports = roleMiner;

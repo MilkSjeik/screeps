@@ -6,11 +6,10 @@
  * var mod = require('role.harvester')
  * mod.thing == 'a thing' // true
  */
-const Logger = require('logger');
-const L = require('./logger.constants');
+const Logger = require("logger");
+const L = require("./logger.constants");
 
 const roleHarvester = {
-
   /** @param {Creep} creep **/
   run: function (creep) {
     const log = new Logger(L.INFO);
@@ -32,15 +31,30 @@ const roleHarvester = {
       //             - filter: callback funtion
       //             - callback function as ES6 arrow function: (structure) => { return (structure.structureType == STRUCTURE_EXTENSION || structure.structureType == STRUCTURE_SPAWN) && structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0; }
       //             - what is after 'return' is the "if" condition or structure has to apply to
-      let targets = creep.room.find(FIND_MY_STRUCTURES, { filter: (structure) => {
-        return (structure.structureType == STRUCTURE_EXTENSION || structure.structureType == STRUCTURE_SPAWN) && structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;}});
+      let targets = creep.room.find(FIND_MY_STRUCTURES, {
+        filter: (structure) => {
+          return (
+            (structure.structureType == STRUCTURE_EXTENSION ||
+              structure.structureType == STRUCTURE_SPAWN) &&
+            structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0
+          );
+        }
+      });
       // console.log(targets)
       for (let target in targets) {
-        log.msg(L.DEBUG, targets[target].structureType + targets[target].id + ' free capacity: ' + targets[target].store.getFreeCapacity(RESOURCE_ENERGY));
+        log.msg(
+          L.DEBUG,
+          targets[target].structureType +
+            targets[target].id +
+            " free capacity: " +
+            targets[target].store.getFreeCapacity(RESOURCE_ENERGY)
+        );
       }
       if (targets.length > 0) {
         if (creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-          creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff'}});
+          creep.moveTo(targets[0], {
+            visualizePathStyle: { stroke: "#ffffff" }
+          });
         }
       }
     }
