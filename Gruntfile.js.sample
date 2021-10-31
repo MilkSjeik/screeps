@@ -1,26 +1,37 @@
 module.exports = function (grunt) {
   // Load tasks
-  grunt.loadNpmTasks('grunt-screeps');
+  grunt.loadNpmTasks("grunt-screeps");
   grunt.loadNpmTasks("grunt-eslint");
+  grunt.loadNpmTasks("grunt-prettier");
 
   grunt.initConfig({
     screeps: {
       options: {
-        email: '<your e-mail>',
-        token: '<your auth token>',
-        branch: 'default',
+        email: "<your e-mail>",
+        token: "<your auth token>",
+        branch: "default",
       // server: 'season'
       },
       dist: {
-        src: ['src/*.js']
+        src: ["src/*.js"]
       }
     },
     eslint: {
-      target: ['src/*.js']
+      target: ["src/*.js"]
+    },
+    prettier: {
+      options: {
+        progress: false // By default, a progress bar is not shown. You can opt into this behavior by passing true.
+      },
+      files: {
+        src: [
+          "src/*.js"
+        ]
+      }
     }
   });
 
   // Linting task
-  grunt.registerTask('lint', ['eslint']);
-  grunt.registerTask('default', ['eslint', 'screeps']);
+  grunt.registerTask("lint", ["eslint"]);
+  grunt.registerTask("default", ["prettier","eslint", "screeps"]);
 };
