@@ -2,9 +2,13 @@
     "env": {
         "browser": true,
         "commonjs": true,
-        "es2021": true
+        "es2021": true,
+        "screeps/screeps": true
     },
     "extends": "eslint:recommended",
+    "plugins": [
+          "screeps"
+    ],
     "parserOptions": {
         "ecmaVersion": 13
     },
